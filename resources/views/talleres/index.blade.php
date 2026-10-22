@@ -24,7 +24,7 @@
             <a href="https://iutacaracas.edu.ve"><i class="fa-solid fa-globe web-color"></i></a>
         </div>
         <div class="img">
-            <img src="https://img.freepik.com/fotos-premium/longitud-total-estudiantes-universitarios-felices-caminando-juntos-campus_763111-5348.jpg?w=2000" alt="Estudiantes">
+            <img src="{{ asset('images/foto-grupal.jpeg') }}" alt="Estudiantes">
         </div>
     </div>
 </header>

@@ -2,40 +2,43 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Panel Administrador - Subir Taller</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrador - Servicio Comunitario IUTA</title>
+    <link rel="stylesheet" href="{{ asset('css/estilo.css') }}">
 </head>
-<body style="font-family: Arial; background: #f2f2f2; padding: 40px;">
-    <div style="max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-        <h2>Panel Administrador: Agregar Taller</h2>
+<body class="admin-body">
 
-        @if(session('success'))
-            <p style="color: green; font-weight: bold;">{{ session('success') }}</p>
-        @endif
+    <div class="admin-container">
+        <div class="form-card">
+            <h2>Panel Administrador: Agregar Taller</h2>
 
-        <form action="{{ route('admin.workshops.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div style="margin-bottom: 15px;">
-                <label>Título del Taller:</label><br>
-                <input type="text" name="title" required style="width: 100%; padding: 8px;">
-            </div>
+            <form action="{{ route('admin.talleres.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                
+                <div class="form-group">
+                    <label for="titulo">Título del Taller:</label>
+                    <input type="text" id="titulo" name="titulo" required placeholder="Ingresa el título...">
+                </div>
 
-            <div style="margin-bottom: 15px;">
-                <label>Descripción:</label><br>
-                <textarea name="description" required rows="4" style="width: 100%; padding: 8px;"></textarea>
-            </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" rows="4" required placeholder="Escribe la descripción del taller..."></textarea>
+                </div>
 
-            <div style="margin-bottom: 15px;">
-                <label>Imagen Principal del Taller:</label><br>
-                <input type="file" name="image">
-            </div>
+                <div class="form-group">
+                    <label for="imagen">Imagen Principal del Taller:</label>
+                    <input type="file" id="imagen" name="imagen" accept="image/*" required>
+                </div>
 
-            <div style="margin-bottom: 15px;">
-                <label>Subir Videos, Fotos o Documentos (puedes seleccionar varios):</label><br>
-                <input type="file" name="files[]" multiple>
-            </div>
+                <div class="form-group">
+                    <label for="recursos">Subir Videos, Fotos o Documentos (puedes seleccionar varios):</label>
+                    <input type="file" id="recursos" name="recursos[]" multiple>
+                </div>
 
-            <button type="submit" style="background: #1877F2; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Guardar Taller</button>
-        </form>
+                <button type="submit" class="btn-primary">Guardar Taller</button>
+            </form>
+        </div>
     </div>
+
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Web - Servicio comunitario Iuta</title>
+    <title>Página Web - Servicio Comunitario IUTA</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Tu CSS desde la carpeta public -->
@@ -12,19 +12,17 @@
 <body>
 
 <header class="myheader">
-    <a href="https://iutacaracas.edu.v" class="logo">
-        <!-- Logo en la carpeta public/images -->
-        <img src="{{ asset('images/logo-iuta.png') }}" alt="Logo Iuta">
-    </a>
-
     <div class="colum2">
         <div class="redes">
-            <a href="https://instagram.com/iutacaracas"><i class="fa-brands fa-instagram instagram-color"></i></a>
-            <a href="https://www.facebook.com/Iutacaracas/"><i class="fa-brands fa-facebook facebook-color"></i></a>
-            <a href="https://iutacaracas.edu.ve"><i class="fa-solid fa-globe web-color"></i></a>
+            <a href="{{ asset('index.html') }}" class="logo">
+                <img src="{{ asset('images/logo-iuta.png') }}" alt="Logo IUTA">
+            </a>
+            <a href="https://www.instagram.com/servicio_comunitario_iuta?exln=enR5cHllNmJmcHFp&utm_source=qr" target="_blank"><i class="fa-brands fa-instagram instagram-color"></i></a>
+            <a href="https://www.facebook.com/Iutacaracas/" target="_blank"><i class="fa-brands fa-facebook facebook-color"></i></a>
+            <a href="https://iutacaracas.edu.ve" target="_blank"><i class="fa-solid fa-globe web-color"></i></a>
         </div>
         <div class="img">
-            <img src="{{ asset('images/foto-grupal.jpeg') }}" alt="Estudiantes">
+            <img src="{{ asset('images/Foto-grupal.jpeg') }}" alt="Estudiantes">
         </div>
     </div>
 </header>
@@ -32,8 +30,8 @@
 <div class="menuNavegacion">
     <nav class="paginas">
         <a href="/">Inicio</a>
-        <a href="#talleres-seccion">Talleres</a>
-        <a href="">¿Quienes Somos?</a>
+        <a href="{{ asset('talleres.html') }}">Talleres</a>
+        <a href="#quienes-somos">¿Quiénes Somos?</a>
     </nav>
 </div>
 
@@ -45,38 +43,53 @@
     <h1 class="titulo">Servicio Comunitario IUTA 2026</h1>
 </div>
 
-<!-- SECCIÓN DE TALLERES DINÁMICOS -->
-<div id="talleres-seccion" style="padding: 50px 20px; max-width: 1000px; margin: 0 auto; font-family: Arial, sans-serif;">
-    <h2 style="text-align: center; margin-bottom: 40px; color: #1877F2; font-size: 35px;">periodo lll 285A4<br>tutor académico: Profesor Julio Tovar</h2>
-
-    @foreach($workshops as $workshop)
-        <div style="background: #f9f9f9; border: 1px solid #ddd; padding: 25px; margin-bottom: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-            <h3 style="color: #333; font-size: 24px; margin-top: 0;">{{ $workshop->title }}</h3>
-            <p style="color: #666; font-size: 16px; line-height: 1.5;">{{ $workshop->description }}</p>
-
-            @if($workshop->image)
-                <div style="margin: 15px 0;">
-                    <img src="{{ asset('storage/' . $workshop->image) }}" alt="Imagen del Taller" style="max-width: 250px; border-radius: 6px;">
-                </div>
-            @endif
-
-            <h4 style="color: #4400ff; margin-top: 20px;">Archivos multimedia y documentos:</h4>
-            <ul style="list-style-type: none; padding: 0;">
-                @foreach($workshop->resources as $resource)
-                    <li style="margin: 8px 0; background: #fff; padding: 10px; border-radius: 5px; border: 1px solid #eee;">
-                        @if($resource->type == 'video')
-                            🎥 Video: <a href="{{ asset('storage/' . $resource->file_path) }}" target="_blank" style="color: #1877F2; text-decoration: none; font-weight: bold;">{{ $resource->title }}</a>
-                        @elseif($resource->type == 'document')
-                            📄 Documento: <a href="{{ asset('storage/' . $resource->file_path) }}" download style="color: #1877F2; text-decoration: none; font-weight: bold;">{{ $resource->title }}</a>
-                        @else
-                            🖼️ Imagen: <a href="{{ asset('storage/' . $resource->file_path) }}" target="_blank" style="color: #1877F2; text-decoration: none; font-weight: bold;">{{ $resource->title }}</a>
-                        @endif
-                    </li>
-                @endforeach
-            </ul>
+<!-- ================= SECCIÓN 1: ¿QUIÉNES SOMOS? ================= -->
+<section id="quienes-somos" class="seccion-bloque seccion-azul-1">
+    <div class="contenedor-flex">
+        <div class="marco-foto">
+            <img src="{{ asset('images/quienes somos.jpeg') }}" alt="Proyecto" class="foto-proyecto" onerror="this.onerror=null; this.parentNode.classList.add('sin-imagen');">
+            <span class="placeholder-texto"><i class="fa-solid fa-image"></i><br>Coloca aquí la foto del proyecto 1</span>
         </div>
-    @endforeach
-</div>
+        <div class="bloque-texto">
+            <h2 class="titulo-seccion">¿Quiénes Somos?</h2>
+            <p class="parrafo-seccion">
+                Somos el equipo del Servicio Comunitario del IUTA, comprometidos con la formación integral, el desarrollo tecnológico y el apoyo a las comunidades a través de proyectos orientados a la innovación y el beneficio social.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= SECCIÓN 2: NUESTRO OBJETIVO (Intercalado y tono azul contrastante) ================= -->
+<section id="nuestro-objetivo" class="seccion-bloque seccion-azul-2 invertido">
+    <div class="contenedor-flex">
+        <div class="marco-foto">
+            <img src="{{ asset('images/objetivo.jpeg') }}" alt="Objetivo" class="foto-proyecto" onerror="this.onerror=null; this.parentNode.classList.add('sin-imagen');">
+            <span class="placeholder-texto"><i class="fa-solid fa-image"></i><br>Coloca aquí la foto del proyecto 2</span>
+        </div>
+        <div class="bloque-texto">
+            <h2 class="titulo-seccion">Nuestro Objetivo</h2>
+            <p class="parrafo-seccion">
+                Desarrollar e implementar soluciones tecnológicas prácticas y capacitaciones comunitarias que impulsen la transformación digital y mejoren los procesos administrativos y educativos en nuestro entorno.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= SECCIÓN 3: CONCLUSIÓN ================= -->
+<section id="conclusion" class="seccion-bloque seccion-azul-1">
+    <div class="contenedor-flex">
+        <div class="marco-foto">
+            <img src="{{ asset('images/conclusion.jpeg') }}" alt="Conclusión" class="foto-proyecto" onerror="this.onerror=null; this.parentNode.classList.add('sin-imagen');">
+            <span class="placeholder-texto"><i class="fa-solid fa-image"></i><br>Coloca aquí la foto del proyecto 3</span>
+        </div>
+        <div class="bloque-texto">
+            <h2 class="titulo-seccion">Conclusión</h2>
+            <p class="parrafo-seccion">
+                A través del esfuerzo continuo y el trabajo colaborativo con la comunidad, hemos logrado consolidar aprendizajes significativos y dejar una huella positiva que promueve el desarrollo tecnológico sostenible.
+            </p>
+        </div>
+    </div>
+</section>
 
 </body>
 </html>

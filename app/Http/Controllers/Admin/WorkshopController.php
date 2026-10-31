@@ -18,34 +18,38 @@ class WorkshopController extends Controller
     // Guardar el taller y sus archivos en la BD
     public function store(Request $request)
     {
+        // 1. Validar usando los nombres exactos del formulario
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required',
-            'image' => 'nullable|image|max:2048',
+            'titulo' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'imagen' => 'required|image|max:2048',
         ]);
 
+        // 2. Guardar la imagen principal
         $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('workshops', 'public');
+        if ($request->hasFile('imagen')) {
+            $imagePath = $request->file('imagen')->store('workshops', 'public');
         }
 
-        $workshop = Workshop::create([
-            'title' => $request->title,
-            'description' => $request->description,
+        // 3. Crear el registro usando el modelo Talleres
+        $taller = Talleres::create([
+            'titulo' => $request->titulo,
+            'descripcion' => $request->descripcion,
             'image' => $imagePath,
         ]);
 
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $file) {
+        // 4. Guardar los archivos múltiples (recursos)
+        if ($request->hasFile('recursos')) {
+            foreach ($request->file('recursos') as $file) {
                 $path = $file->store('resources', 'public');
                 $extension = strtolower($file->getClientOriginalExtension());
                 
                 $type = in_array($extension, ['mp4', 'mov', 'avi', 'mkv']) ? 'video' : 
                         (in_array($extension, ['pdf', 'doc', 'docx', 'txt', 'ppt']) ? 'document' : 'image');
 
-                Resource::create([
-                    'workshop_id' => $workshop->id,
-                    'title' => $file->getClientOriginalName(),
+                // Usamos la relación para guardar automáticamente el ID del taller
+                $taller->resources()->create([
+                    'titulo' => $file->getClientOriginalName(),
                     'type' => $type,
                     'file_path' => $path,
                 ]);

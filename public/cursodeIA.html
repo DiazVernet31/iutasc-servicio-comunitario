@@ -309,15 +309,19 @@
             <!-- COLUMNA IZQUIERDA: VIDEO E INFORMACIÓN DE LA CLASE -->
             <div class="video-columna">
                 
-                <!-- REPRODUCTOR DE VIDEO -->
+            <!-- REPRODUCTOR DE VIDEO -->
                 <div class="video-wrapper">
-                    <!-- Puedes colocar aquí la etiqueta <video> o una imagen de portada estática -->
-                    <img src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Portada de la clase">
-                    
-                    <button type="button" class="btn-play-overlay">
-                        <i class="fa-solid fa-play"></i> Reproducir muestra
-                    </button>
-                </div>
+                    <!-- Reemplazamos la imagen por la etiqueta <video> con controles ocultos o personalizados -->
+                    <video id="video-clase" poster="https://www.genetec.com/binaries/content/gallery/genetecweb/externalupload/webgraphic_putting-ai-to-work-blog-2024.png">
+                    <source src="/cursos/IA basica.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+    
+    <!-- Botón interactivo para reproducir -->
+    <button type="button" id="btn-reproducir" class="btn-play-overlay">
+        <i class="fa-solid fa-play" id="icono-play"></i> <span id="texto-btn">Reproducir muestra</span>
+    </button>
+</div>
 
                 <!-- DETALLES DE LA CLASE -->
                 <div class="sobre-clase-card">
@@ -373,6 +377,37 @@
 
     </div>
 </main>
+<script>
+    // Seleccionamos los elementos del DOM
+    const video = document.getElementById('video-clase');
+    const boton = document.getElementById('btn-reproducir');
+    const icono = document.getElementById('icono-play');
+    const texto = document.getElementById('texto-btn');
+
+    boton.addEventListener('click', function() {
+        if (video.paused) {
+            video.play();
+            video.controls = true; // Muestra los controles nativos del reproductor al reproducir
+            boton.style.opacity = '0'; // Oculta el botón flotante para que no estorbe al ver el video
+            boton.style.pointerEvents = 'none';
+        } else {
+            video.pause();
+        }
+    });
+
+    // Si el usuario pausa el video por otros medios, el botón vuelve a aparecer
+    video.addEventListener('pause', function() {
+        boton.style.opacity = '1';
+        boton.style.pointerEvents = 'auto';
+        icono.className = "fa-solid fa-play";
+        texto.textContent = "Reproducir muestra";
+    });
+
+    video.addEventListener('play', function() {
+        icono.className = "fa-solid fa-pause";
+        texto.textContent = "Pausar";
+    });
+</script>
 
 </body>
 </html>

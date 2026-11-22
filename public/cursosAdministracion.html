@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Talleres - Servicio Comunitario IUTA</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilo principal -->
+    <link rel="stylesheet" href="css/estilo.css">
+    
+    <style>
+        /* Estilos específicos adaptados al diseño moderno */
+        .catalogo-hero {
+            background-color: #40538c;
+            padding: 50px 20px 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .catalogo-hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .catalogo-header h1 {
+            color: #ffffff;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .catalogo-header p {
+            color: #edf3f7;
+            font-size: 1.15rem;
+            margin-bottom: 30px;
+        }
+
+        /* Pestañas de navegación superiores */
+        .tabs-container {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            border: 1px solid rgba(152, 228, 212, 0.48);
+            color: #eafaf6;
+            background: #103650;
+            padding: 10px 22px;
+            border-radius: 9999px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background .2s, color .2s, transform .2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            background: #19516a;
+        }
+        .filter-btn.active {
+            background: #7cdeca;
+            color: #092942;
+            border-color: #7cdeca;
+            box-shadow: 0 5px 20px rgba(7, 30, 52, 0.19);
+            font-weight: 700;
+        }
+
+        /* Rejilla de tarjetas de talleres */
+        .talleres-grid-section {
+            padding: 60px 20px;
+            background-color: #071e34;
+            min-height: 500px;
+        }
+        .grid-cards {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+        }
+
+        /* Tarjeta de Taller Estilo Moderno */
+        .workshop-card {
+            background: #102f4b;
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: transform .25s, box-shadow .25s, border-color .25s;
+            display: flex;
+            flex-direction: column;
+        }
+        .workshop-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(3, 21, 34, 0.4);
+            border-color: rgba(124, 222, 202, 0.57);
+        }
+        .card-image-container {
+            width: 100%;
+            height: 190px;
+            position: relative;
+        }
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(9, 41, 66, 0.67), transparent 55%);
+            pointer-events: none;
+        }
+        .card-badge {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            background: #7cdeca;
+            color: #092942;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .workshop-content {
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .workshop-category {
+            color: #7cdeca;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .workshop-title {
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+        }
+        .workshop-desc {
+            color: #c4d3da;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        .workshop-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .workshop-level {
+            background: rgb(37, 72, 96);
+            color: rgb(220, 238, 234);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+        }
+        .workshop-link {
+            color: #7cdeca;
+            font-weight: 700;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-size: 0.9rem;
+        }
+        .workshop-link:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body style="background: rgb(9, 41, 66);">
+
+<!-- ENCABEZADO INSTITUCIONAL -->
+<header class="myheader">
+    <div class="colum2">
+        <div class="redes">
+            <a href="/" class="logo">
+                <img src="images/logo-iuta.png" alt="Logo IUTA">
+            </a>
+            <a href="https://www.instagram.com/servicio_comunitario_iuta?exln=enR5cHllNmJmcHFp&utm_source=qr" target="_blank"><i class="fa-brands fa-instagram instagram-color"></i></a>
+            <a href="https://www.facebook.com/Iutacaracas/" target="_blank"><i class="fa-brands fa-facebook facebook-color"></i></a>
+            <a href="https://iutacaracas.edu.ve" target="_blank"><i class="fa-solid fa-globe web-color"></i></a>
+        </div>
+    </div>
+</header>
+
+<!-- MENÚ DE NAVEGACIÓN PRINCIPAL -->
+<div class="menuNavegacion">
+    <nav class="paginas">
+        <a href="/">Inicio</a>
+        <a href="talleres.html" style="color: #000000;">Talleres</a>
+        <a href="/#quienes-somos">¿Quiénes Somos?</a>
+    </nav>
+</div>
+
+<!-- HERO SECTION CON EL DISEÑO DE CANVA -->
+<section class="catalogo-hero">
+    <div class="catalogo-hero-content">
+        <div class="catalogo-header">
+            <p style="color: #7cdeca; text-transform: uppercase; letter-spacing: .22em; font-size: 12px; font-weight: bold; margin-bottom: 8px;">APRENDE ALGO NUEVO</p>
+            <h1>Catálogo de Talleres</h1>
+            <p>Explora ideas, desarrolla habilidades y encuentra tu próximo proyecto. Talleres prácticos para aprender a tu ritmo.</p>
+        </div>
+
+        <!-- Pestañas de Filtro Superiores -->
+        <div class="tabs-container">
+            <button type="button" class="filter-btn active">Todos los talleres</button>
+            <button type="button" class="filter-btn">Office y ofimática</button>
+            <button type="button" class="filter-btn">Administración</button>
+            <button type="button" class="filter-btn">Tecnología</button>
+        </div>
+    </div>
+</section>
+
+<!-- SECCIÓN DE TARJETAS DE TALLERES -->
+<section class="talleres-grid-section">
+    <div class="grid-cards">
+        
+        <!-- Tarjeta 1: Administración Básica -->
+        <article class="workshop-card">
+            <div class="card-image-container">
+                <img src="https://www.ufinet.com/wp-content/uploads/2025/08/shutterstock_2446979289.jpg" alt="Administración básica" class="card-image">
+                <div class="card-gradient"></div>
+                <span class="card-badge">Destacado</span>
+            </div>
+            <div class="workshop-content">
+                <span class="workshop-category">IA</span>
+                <h3 class="workshop-title">Taller de IA basica</h3>
+                <p class="workshop-desc">En este curso utilizaremos la ia con mucha fluidez</p>
+                <div class="workshop-footer">
+                    <span class="workshop-level">Principiante</span>
+                    <a href="cursointernet.html" class="workshop-link">Ver taller →</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Tarjeta 2: Soporte Técnico -->
+        <article class="workshop-card">
+            <div class="card-image-container">
+                <img src="https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Soporte técnico" class="card-image">
+                <div class="card-gradient"></div>
+                <span class="card-badge" style="background:#19516a; color:#7cdeca;">Práctico</span>
+            </div>
+            <div class="workshop-content">
+                <span class="workshop-category">Tecnología</span>
+                <h3 class="workshop-title">Soporte técnico y mantenimiento</h3>
+                <p class="workshop-desc">Aprende a diagnosticar problemas y cuidar tus equipos.</p>
+                <div class="workshop-footer">
+                    <span class="workshop-level">Intermedio</span>
+                    <a href="#" class="workshop-link">Ver taller →</a>
+                </div>
+            </div>
+        </article>
+
+
+    </div>
+</section>
+
+</body>
+</html>

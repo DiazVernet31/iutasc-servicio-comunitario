@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula de Talleres - Servicio Comunitario IUTA</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tu CSS base -->
+    <link rel="stylesheet" href="css/estilo.css">
+    
+    <style>
+        /* --- ESTILOS DE LA INTERFAZ DEL REPRODUCTOR DE CLASES --- */
+        .aula-hero {
+            background-color: #3f4f88;
+            padding: 40px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .aula-hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .aula-kicker {
+            color: #b0adc4;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .aula-title {
+            color: #ffffff;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .badge-muestra {
+            background-color: #76d7c4;
+            color: #0b2545;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 6px 16px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL DE LA CLASE --- */
+        .clase-main-section {
+            background-color: #0b2545;
+            padding: 50px 20px;
+            min-height: 80vh;
+        }
+
+        .clase-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .clase-subhead {
+            color: #76d7c4;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .clase-headline {
+            color: #ffffff;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+        }
+
+        .clase-subtitle {
+            color: #c4d3da;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        /* REJILLA: REPRODUCTOR + TEMARIO */
+        .clase-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        /* MARCO DEL REPRODUCTOR DE VIDEO */
+        .video-wrapper {
+            background-color: #102f4b;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-wrapper video, 
+        .video-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* BOTÓN DE REPRODUCIR */
+        .btn-play-overlay {
+            position: absolute;
+            background-color: #76d7c4;
+            color: #0b2545;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+            z-index: 5;
+        }
+
+        .btn-play-overlay:hover {
+            transform: scale(1.05);
+            background-color: #ffffff;
+        }
+
+        /* CARD DE INFORMACIÓN INFERIOR (SOBRE ESTA CLASE) */
+        .sobre-clase-card {
+            background-color: #102f4b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .badge-info {
+            background-color: #1b445e;
+            color: #76d7c4;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .sobre-clase-card h4 {
+            color: #ffffff;
+            font-size: 1.25rem;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+
+        .sobre-clase-card p {
+            color: #c4d3da;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0 0 15px 0;
+        }
+
+        .nota-aclaratoria {
+            color: #8da4b4;
+            font-size: 0.8rem;
+            margin: 0;
+        }
+
+        /* PANEL LATERAL: CONTENIDO DEL CURSO */
+        .temario-card {
+            background-color: #102f4b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            height: fit-content;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .temario-kicker {
+            color: #76d7c4;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .temario-card h3 {
+            color: #ffffff;
+            font-size: 1.4rem;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+
+        .temario-subtitle {
+            color: #c4d3da;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modulo-item {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .modulo-item:last-child {
+            border-bottom: none;
+        }
+
+        .modulo-header {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+
+        .modulo-num {
+            color: #76d7c4;
+            font-size: 0.9rem;
+            font-weight: 800;
+        }
+
+        .modulo-title {
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .modulo-desc {
+            color: #8da4b4;
+            font-size: 0.85rem;
+            margin: 0;
+            padding-left: 28px;
+        }
+
+        /* ADAPTABILIDAD MOBILE */
+        @media (max-width: 900px) {
+            .clase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ENCABEZADO INSTITUCIONAL CON MARCA DE AGUA -->
+<header class="myheader">
+    <div class="colum2">
+        <div class="redes">
+            <a href="/" class="logo">
+                <img src="images/logo-iuta.png" alt="Logo IUTA">
+            </a>
+            <a href="https://www.instagram.com/servicio_comunitario_iuta?exln=enR5cHllNmJmcHFp&utm_source=qr" target="_blank"><i class="fa-brands fa-instagram instagram-color"></i></a>
+            <a href="https://www.facebook.com/Iutacaracas/" target="_blank"><i class="fa-brands fa-facebook facebook-color"></i></a>
+            <a href="https://iutacaracas.edu.ve" target="_blank"><i class="fa-solid fa-globe web-color"></i></a>
+        </div>
+    </div>
+</header>
+
+<!-- MENÚ DE NAVEGACIÓN PRINCIPAL -->
+<div class="menuNavegacion">
+    <nav class="paginas">
+        <a href="/">Inicio</a>
+        <a href="talleres.html" style="color: #000000;">Talleres</a>
+        <a href="/#quienes-somos">¿Quiénes Somos?</a>
+    </nav>
+</div>
+
+<!-- CABECERA DEL AULA DE TALLERES -->
+<section class="aula-hero">
+    <div class="aula-hero-content">
+        <div>
+            <div class="aula-kicker">APRENDE A TU RITMO</div>
+            <h1 class="aula-title">Aula de Talleres</h1>
+        </div>
+        <div>
+            <span class="badge-muestra">Clase de Muestra</span>
+        </div>
+    </div>
+</section>
+
+<!-- SECCIÓN PRINCIPAL: REPRODUCTOR DE VIDEO + CONTENIDO -->
+<main class="clase-main-section">
+    <div class="clase-container">
+        
+        <div class="clase-subhead">CREATIVIDAD · VIDEO</div>
+        <h2 class="clase-headline">Ideas que cobran vida</h2>
+        <p class="clase-subtitle">Un espacio sencillo para ver tu clase, seguir el temario y volver a las ideas importantes.</p>
+
+        <div class="clase-grid">
+            
+            <!-- COLUMNA IZQUIERDA: VIDEO E INFORMACIÓN DE LA CLASE -->
+            <div class="video-columna">
+                
+            <!-- REPRODUCTOR DE VIDEO -->
+                <div class="video-wrapper">
+                    <!-- Reemplazamos la imagen por la etiqueta <video> con controles ocultos o personalizados -->
+                    <video id="video-clase" poster="https://www.ufinet.com/wp-content/uploads/2025/08/shutterstock_2446979289.jpg">
+                    <source src="/cursos/Administracion.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+    
+    <!-- Botón interactivo para reproducir -->
+    <button type="button" id="btn-reproducir" class="btn-play-overlay">
+        <i class="fa-solid fa-play" id="icono-play"></i> <span id="texto-btn">Reproducir muestra</span>
+    </button>
+</div>
+
+                <!-- DETALLES DE LA CLASE -->
+                <div class="sobre-clase-card">
+                    <span class="badge-info">Sobre esta clase</span>
+                    <h4>Empieza con una buena idea</h4>
+                    <p>Explora cómo dar forma a una historia visual: identifica tu mensaje, piensa en la composición y organiza una secuencia que mantenga la atención. Usa este espacio para acompañar el video con una explicación clara de la lección.</p>
+                    <p class="nota-aclaratoria">El video reproducido es material de muestra y no corresponde al temario descrito.</p>
+                </div>
+
+            </div>
+
+            <!-- COLUMNA DERECHA: TEMARIO Y RECORRIDO DEL CURSO -->
+            <aside class="temario-columna">
+                <div class="temario-card">
+                    <div class="temario-kicker">TU RECORRIDO</div>
+                    <h3>Contenido del curso</h3>
+                    <p class="temario-subtitle">Una vista rápida de los temas que puedes desarrollar en este curso.</p>
+
+                    <div class="modulos-lista">
+                        
+                        <!-- Módulo 1 -->
+                        <div class="modulo-item">
+                            <div class="modulo-header">
+                                <span class="modulo-num">01</span>
+                                <h4 class="modulo-title">La idea central</h4>
+                            </div>
+                            <p class="modulo-desc">Define el mensaje que quieres contar.</p>
+                        </div>
+
+                        <!-- Módulo 2 -->
+                        <div class="modulo-item">
+                            <div class="modulo-header">
+                                <span class="modulo-num">02</span>
+                                <h4 class="modulo-title">Composición visual</h4>
+                            </div>
+                            <p class="modulo-desc">Ordena imágenes y elementos con intención.</p>
+                        </div>
+
+                        <!-- Módulo 3 -->
+                        <div class="modulo-item">
+                            <div class="modulo-header">
+                                <span class="modulo-num">03</span>
+                                <h4 class="modulo-title">Ritmo y narrativa</h4>
+                            </div>
+                            <p class="modulo-desc">Conecta las escenas en una secuencia clara.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+
+    </div>
+</main>
+<script>
+    // Seleccionamos los elementos del DOM
+    const video = document.getElementById('video-clase');
+    const boton = document.getElementById('btn-reproducir');
+    const icono = document.getElementById('icono-play');
+    const texto = document.getElementById('texto-btn');
+
+    boton.addEventListener('click', function() {
+        if (video.paused) {
+            video.play();
+            video.controls = true; // Muestra los controles nativos del reproductor al reproducir
+            boton.style.opacity = '0'; // Oculta el botón flotante para que no estorbe al ver el video
+            boton.style.pointerEvents = 'none';
+        } else {
+            video.pause();
+        }
+    });
+
+    // Si el usuario pausa el video por otros medios, el botón vuelve a aparecer
+    video.addEventListener('pause', function() {
+        boton.style.opacity = '1';
+        boton.style.pointerEvents = 'auto';
+        icono.className = "fa-solid fa-play";
+        texto.textContent = "Reproducir muestra";
+    });
+
+    video.addEventListener('play', function() {
+        icono.className = "fa-solid fa-pause";
+        texto.textContent = "Pausar";
+    });
+</script>
+
+</body>
+</html>
